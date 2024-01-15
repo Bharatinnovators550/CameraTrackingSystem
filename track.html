@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TRACK THE LOCATION</title>
+  <link rel="stylesheet" href="track.css">
+</head>
+<body>
+<form onsubmit="submitLocation(event)">
+    <h2>Enter Location</h2>
+    <div class="input-box">
+      <input type="number" id="latitude" placeholder="Latitude" step="any" required>
+    </div>
+    <div class="input-box">
+      <input type="number" id="longitude" placeholder="longitude" step="any" required>
+    </div>
+    <button type="submit" class="btn">Submit Location</button>
+  </form>
+  <script>
+    function submitLocation(event) {
+      event.preventDefault();
+      const latitude = document.getElementById('latitude').value;
+      const longitude = document.getElementById('longitude').value;
+      window.location.href = `leaflet.html?lat=${latitude}&lng=${longitude}`;
+    }
+    </script>
+    
+</body>
+</html>

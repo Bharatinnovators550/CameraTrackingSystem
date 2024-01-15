@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Leaflet Map</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <style>
+    /* Styling for the map container */
+    #map {
+      height: 980px;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-database.js"></script>
+
+  <script>
+    const config = {
+      apiKey: "AIzaSyD2VNtJEHFdZQRKPMDCKZPLb5ga-rdSBKg",
+      authDomain: "project1-2ea55.firebaseapp.com",
+      databaseURL: "https://project1-2ea55-default-rtdb.firebaseio.com",
+      projectId: "project1-2ea55",
+      storageBucket: "project1-2ea55.appspot.com",
+      messagingSenderId: "130966411996",
+      appId: "1:130966411996:web:4b65da345a4417720bf219",
+      measurementId: "G-EMTP6Z7HN5"
+    };
+
+
+    firebase.initializeApp(config);
+    var detailsRef = firebase.database().ref('registrationForm');
+
+    const map = L.map('map').setView([0, 0], 2);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+    }).addTo(map);
+
+    const urlParams = new URLSearchParams(window.location.search);
+
+    const latitude = parseFloat(urlParams.get('lat'));
+    const longitude = parseFloat(urlParams.get('lng'));
+
+    // L.marker([latitude, longitude]).addTo(map)
+    //   .bindPopup(Latitude: ${latitude}<br>Longitude: ${longitude})
+    //   .openPopup();
+
+    // Call getDetails to update markers with names from Firebase
+    getDetails(latitude, longitude);
+    // console.log(latitude);
+    // console.log(longitude);
+    function getDetails(latitude1, longitude) {
+      detailsRef.on('value', function (snapshot) {
+        snapshot.forEach(snap => {
+          const issue = snap.val();
+
+
+          displayPopup(issue);
+
+
+        });
+      });
+    }
+
+    function displayPopup(detail) {
+
+      var popupContent = `
+        Latitude: ${detail.latitude}<br>
+        Longitude: ${detail.longitude}<br>
+        Name: ${detail.username}<br>
+        Camera Details: ${detail.cameraDetails}<br>
+        Address: ${detail.address}
+      `;
+
+      L.marker([detail.latitude, detail.longitude])
+        .bindPopup(popupContent)
+        .addTo(map)
+        .openPopup();
+    }
+  </script>
+</body>
+
+</html>

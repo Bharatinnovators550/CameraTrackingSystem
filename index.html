@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Police Login</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+</head>
+<body>
+  <div class="wrapper">
+    <form onsubmit="loginUser(event)">
+      <h1>Police Login</h1>
+      <div class="input-box">
+        <input type="text" id="emailid" placeholder="Emailid" required>
+        <i class='bx bxs-user'></i>
+      </div>
+      <div class="input-box">
+        <input type="password" id="password" placeholder="Password" required>
+        <i class='bx bxs-lock-alt' ></i>
+      </div>
+      <button type="submit" class="btn">Login</button>
+      <div class="register-link">
+        <p>If you are a user? <a href="register.html">Register Form</a></p>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    function loginUser(event) {
+      event.preventDefault();
+      
+      const emailid = document.getElementById('emailid').value;
+      const password = document.getElementById('password').value;
+
+      // Check if the username and password match the credentials (replace with your logic)
+      if (emailid === 'suriya.ns1206@gmail.com' && password === 'skcet123') {
+        // Redirect to another page upon successful login
+        window.location.href = "track.html"; // Replace with the desired page URL
+      } else {
+        alert("Invalid Emailid or password.");
+      }
+    }
+  </script>
+</body>
+</html>
